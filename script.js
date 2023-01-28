@@ -1,20 +1,19 @@
-// Your JS code here.
-const sliderImages = document.querySelectorAll('.slide-in');
+const msg = new SpeechSynthesisUtterance();
+  let voices = [];
+  const voicesDropdown = document.querySelector('[name="voice"]');
+  const options = document.querySelectorAll('[type="range"], [name="text"]');
+  const speakButton = document.querySelector('#speak');
+  const stopButton = document.querySelector('#stop');
 
-        function checkSlide() {
-            sliderImages.forEach(sliderImage => {
-                // half way through the image
-                const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;
-                // bottom of the image
-                const imageBottom = sliderImage.offsetTop + sliderImage.height;
-                const isHalfShown = slideInAt > sliderImage.offsetTop;
-                const isNotScrolledPast = window.scrollY < imageBottom;
-                if (isHalfShown && isNotScrolledPast) {
-                    sliderImage.classList.add('active');
-                } else {
-                    sliderImage.classList.remove('active');
-                }
-            });
-        }
 
-        window.addEventListener('scroll', debounce(checkSlide));
+speakButton.addEventListener('click', ()=>{
+    msg.rate = options[0].value;
+    msg.pitch = options[1].value;
+    msg.text = options[2].value;
+
+speechSynthesis.speak(msg)
+})
+
+  stopButton.addEventListener('click', ()=>{
+    speechSynthesis.cancel();
+  });
